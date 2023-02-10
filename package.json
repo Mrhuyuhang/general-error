@@ -1,0 +1,31 @@
+{
+  "name": "general-error",
+  "version": "1.0.1",
+  "description": "error SDK",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "rollup -w -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mrhuyuhang/general-error.git"
+  },
+  "keywords": [
+    "jsSDK"
+  ],
+  "author": "Mrhuyuhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mrhuyuhang/general-error/issues"
+  },
+  "homepage": "https://github.com/Mrhuyuhang/general-error#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^23.0.3",
+    "@rollup/plugin-json": "^5.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "rollup": "^2.78.0",
+    "rollup-plugin-uglify": "^6.0.4"
+  }
+}
