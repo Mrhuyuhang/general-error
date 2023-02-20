@@ -1,23 +1,48 @@
-import { _global, listen, errorType } from "./until";
-import { Dep } from "./handleEvents";
+import { _global, listen, errorType, replaceAop } from "./until";
+import { Dep } from "./Dep";
+const dep = new Dep();
 /**
  * @description 普通错误监听
- * @param {object} global this
- * @param {*function} hander 执行函数
  */
-function listenError(global, hander) {
-  listen(global, "error", hander);
+function listenError() {
+  listen(_global, "error", function () {
+    dep.notifiy("Error", error);
+  });
 }
 /**
  * @description 重写xhr
  */
-function repalceXhr() {
+function replaceXhr() {
   if (!("XMLHttpRequest" in _global)) return;
   const originalXhrProto = XMLHttpRequest.prototype;
+  //改写open
   replaceAop(originalXhrProto, "open", (originalOpen) => {
     return function (...args) {
-      //在调用原函数之前。可以做点事情
+      //在调用原函数之前。可以做点事情。这里在this新增一些我们自定义的属性，以备后面可能会用到
+      this.info_xhr = {
+        method: args[0],
+        url: args[1],
+        sTime: Date.now(),
+        type: "XHR",
+      };
       originalOpen.apply(this, args);
+    };
+  });
+  //改写send
+  replaceAop(originalXhrProto, "send", (originalSend) => {
+    return function (...args) {
+      console.log(this);
+      //监听loadend事件。这个事件不管失败成功。都会触发
+      const { url } = this.info_xhr;
+      listen(this, "loadend", function () {
+        //状态
+        this.websee_xhr.status = this.status;
+        //接口执行时长
+        this.websee_xhr.elapsedTime = Date.now() - this.websee_xhr.sTime;
+        //订阅通知
+        dep.notifiy(this.websee_xhr.type, this.websee_xhr);
+      });
+      originalSend.apply(this, args);
     };
   });
 }
@@ -32,8 +57,6 @@ function getHandler(type, data) {
   }
 }
 
-const dep = new Dep();
-
 export function initReplaceHandle() {
   for (const value of errorType) {
     let typeObj = {
@@ -42,7 +65,6 @@ export function initReplaceHandle() {
     };
     dep.addSub(typeObj);
   }
-  listenError(_global, function (error) {
-    dep.notifiy("Error", error);
-  });
+  listenError();
+  replaceXhr();
 }

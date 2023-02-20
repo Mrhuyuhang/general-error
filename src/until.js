@@ -23,14 +23,15 @@ export function listen(ctx, eventName, hander, option = false) {
  * @description 通用重写函数 重写对象里的某一个属性
  * @param source {object} 重写的源对象
  * @param key {string} 需要重写的key
- * @param repalceFn {function} aop函数
+ * @param replaceFn {function} aop函数
  * @param isFoce {boolean} 是否强制重写
  */
-export function repalceAop(source, key, repalceFn, isFoce = false) {
+export function replaceAop(source, key, replaceFn, isFoce = false) {
+  console.log(2);
   if (source === undefined) return;
   if (key in source || isFoce) {
     const original = source[key]; //原始函数
-    const wrapped = repalceFn(original); //触发aop操作
+    const wrapped = replaceFn(original); //触发aop操作
     //覆盖对象原有的属性
     if (typeof wrapped === "function") {
       source[key] = wrapped;

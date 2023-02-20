@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #watermark {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.5;
+      }
+      body,
+      html {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      #sssss {
+        height: 200px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sssss">ssss</div>
+    <button onclick="con()">点我</button>
+  </body>
+  <script src="./test.js"></script>
+  <script>
+    watermark.load({
+      watermark_parent_node: "sssss",
+      watermark_txt: "测试水印，1021002301，测试水印，100101010111101",
+    });
+    function con() {
+      alert(100);
+    }
+  </script>
+</html>
