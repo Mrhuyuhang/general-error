@@ -6,7 +6,9 @@ export function isWindow() {
 }
 
 export const _global = isWindow();
+
 export const errorType = ["Error", "XHR", "Fetch", "Promise"];
+
 /**
  * @description 通用监听方法
  * @param ctx {object} 上下文
@@ -27,7 +29,6 @@ export function listen(ctx, eventName, hander, option = false) {
  * @param isFoce {boolean} 是否强制重写
  */
 export function replaceAop(source, key, replaceFn, isFoce = false) {
-  console.log(2);
   if (source === undefined) return;
   if (key in source || isFoce) {
     const original = source[key]; //原始函数
@@ -37,4 +38,24 @@ export function replaceAop(source, key, replaceFn, isFoce = false) {
       source[key] = wrapped;
     }
   }
+}
+
+/**
+ * @description 获取数据的类型
+ * @param source {any} 源数据
+ */
+export function getType(source) {
+  return Object.prototype.toString.call(source).slice(8, -1).toLowerCase();
+}
+
+/**
+ * @description 验证对象的值是不是指定的类型
+ * @param target {object} 源数据
+ * @param key {string} key
+ * @param type {string} 数据类型
+ */
+export function validateKey(target, key, type) {
+  if (!target || !target[key]) return false;
+  if (getType(target[key]) === type) return true;
+  console.error(`${key}应该传入${type}类型`);
 }
