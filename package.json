@@ -10,6 +10,9 @@
     "lint": "eslint --fix",
     "build": "rollup -c"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mrhuyuhang/general-error.git"
