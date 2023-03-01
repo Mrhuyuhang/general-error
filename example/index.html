@@ -5,15 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .flex {
+        display: flex;
+        width: 1000px;
+        height: 60px;
+      }
+      .flex-item {
+        border: 1px solid red;
+        flex: 1;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <div class="flex">
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+  <script src="./axios.js"></script>
   <script src="../dist/index.js"></script>
   <script>
-    test.init({
-      url:"index"
+    GenError.init({
+      transport: (err) => {
+        axios.get('/user', {
+          params: {
+            ID: 12345,
+          },
+        });
+      },
     });
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://10.28.3.2:8000/index/test");
-    xhr.send();
+    const a = 1;
+    a = 0;
   </script>
+  <!-- <script>
+    Vue.use(GenError, {
+      url: '',
+      transport: (err) => {
+        axios.get('/user', {
+          params: {
+            ID: 12345,
+          },
+        });
+      },
+    });
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!',
+      },
+      created() {
+        const a = 1;
+        a = 0;
+      },
+    });
+  </script> -->
 </html>

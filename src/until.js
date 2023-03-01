@@ -2,12 +2,12 @@
  * @description 判断window是否存在
  */
 export function isWindow() {
-  return typeof window === "object" ? window : null;
+  return typeof window === 'object' ? window : null;
 }
 
 export const _global = isWindow();
 
-export const errorType = ["Error", "XHR", "Fetch", "Promise"];
+export const errorType = ['Error', 'XHR', 'Fetch', 'Promise', 'Vue'];
 
 /**
  * @description 通用监听方法
@@ -34,7 +34,7 @@ export function replaceAop(source, key, replaceFn, isFoce = false) {
     const original = source[key]; //原始函数
     const wrapped = replaceFn(original); //触发aop操作
     //覆盖对象原有的属性
-    if (typeof wrapped === "function") {
+    if (typeof wrapped === 'function') {
       source[key] = wrapped;
     }
   }

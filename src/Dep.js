@@ -6,11 +6,10 @@ export class Dep {
       ? this.handleErrors[errors.type].push(errors.cb)
       : (this.handleErrors[errors.type] = [errors.cb]);
   }
+
   notifiy(type, data) {
     this.handleErrors[type].forEach((cb) => {
       cb(type, data);
     });
   }
 }
-
-
